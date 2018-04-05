@@ -1,0 +1,52 @@
+<?php require "head.html"; ?>
+<?php require "side.html"; ?>
+
+<div class="content">
+    <div class="header">
+        <div class="stats">
+            <p class="stat"><span class="number">2014</span>年</p>
+            <p class="stat"><span class="number">05</span>月</p>
+            <p class="stat"><span class="number">25</span>日</p>
+        </div>
+        <h1 class="page-title">欢迎页</h1>
+    </div>
+
+    <ul class="breadcrumb">
+        <li><a href="/admin">管理员设置</a> <span class="divider">/</span></li>
+        <li class="active">添加管理员</li>
+    </ul>
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="well">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#">系统错误日志</a></li>
+                </ul>
+                <div id="myTabContent" class="tab-content">
+                    <?php foreach($sysErrorList as $v) {
+                        echo '<div class="sysErrorList" style="border:solid 1px;"><span>';
+                        echo $v;
+                        echo '</span></div>';
+                    }
+                    ?>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $("[rel=tooltip]").tooltip();
+        $(function() {
+                $('.demo-cancel-click').click(function(){return false;});
+                });
+        function EnterPress(e){
+            var e = e || window.event;
+            if(e.keyCode == 13){
+                $('#login').click();
+            }
+        }
+    </script>
+
+</div>
+<?php require "foot.html"; ?>

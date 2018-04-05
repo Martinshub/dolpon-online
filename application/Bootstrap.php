@@ -99,4 +99,28 @@
          $dispatcher->setView($smarty);
       }*/
 
+       /**
+        * 定义系统错误日志位置
+        * @author martin <1148743058@qq.com>
+        *
+        *
+        */
+      public function _initSysException()
+      {
+
+          $logPath = '/data/log/php-error/'.date('Y-m').'/'.date('d');
+          if(!is_dir($logPath)) {
+              $mkdirStatus = mkdir($logPath, 0755, true);
+              if(!$mkdirStatus) {
+                  throw new Exception("{$logPath} mkdir false");
+              }
+          }
+          $logFile = $logPath.'/'.date('H').'.log';
+
+          ini_set('display_errors', 'Off');  // 错误不显示到页面
+          ini_set('log_errors', 'On');  // 开启日志记录错误
+          ini_set('log_errors_max_len', 1024); // 日志最长字节
+          ini_set('error_log', $logFile); // 决定日志记录的位置
+      }
+
    }

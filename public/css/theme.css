@@ -752,3 +752,6 @@ table.table.list tr:first-child td {
     font-size: .5em;
   }
 }
+.sysErrorList{
+    border:1px solid;
+}
