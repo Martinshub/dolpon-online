@@ -1,11 +1,6 @@
 # 购物车
 yaf+opcache for mvc+orm to api
 
-可以当作学习yaf的入门项目,讲解比较细
-
-
-[DEMO](http://cartbyyaf.sinaapp.com/)
-
 ## 涉及技术
 #### 前端
 - requirejs:模块化和异步加载
@@ -16,21 +11,6 @@ yaf+opcache for mvc+orm to api
 - smarty/twig:php模板引擎,默认关闭
 - memcached:kv快速存取,默认关闭
 - medoo:orm数据库半框架,library/Db.php
-
-
-
-## 快速开始
-
-可以按照以下步骤来部署和运行程序(SAE已经内置，不需要自己安装):
-```
-1.请确保机器localhost已经安装了Yaf扩展框架, 并且已经启动服务器和PHP;
-2.把这个项目拷贝到Webserver的DocumentRoot目录下;
-3.创建php.d/yaf.ini文件,里面启用如下配置,代码才能正确运行：
-    extension=yaf.so
-4.导入schema.sql,并确保conf/application.ini中,mysql的host,user,pwd正确配置.
-5.重启Webserver;
-6.访问http://yourhost/,出现网站页面!, 表示运行成功,否则请查看错误日志;
-```
 
 **yaf.ini文件详细说明:**
 ```
@@ -140,62 +120,3 @@ appconfig->rewrite->高级设置->直接在大框框下填入下面的内容->�
     - rewrite: if(path ~ "^(?!public/)(.*)") goto "/public/$1"
     - rewrite: if(!is_file()) goto "/public/index.php"
 ```
-[注意]
-每种Server要启用Rewrite都需要特别设置, 如果对此有疑问.. RTFM
-
-[注意]
-使用opcache的时候，它会缓存php为静态，debug的时候，最好关闭
-
-### LAMP实践
-```bash
-# 在CentOS6-7测试过
-yum install httpd mysql php php-mysql php-pear
-pear install yaf
-git clone http://github.com/yantze/yaf /var/www/html/shop
-
-# 先创建一个用户名为shop,密码为shop,可以管理shop数据库的账户
-mysql -ushop -p shop < schema.sql
-
-echo '; Enable yaf extension module
-extension=yaf.so
-yaf.environ="product"
-;yaf.environ="devel"
-;yaf.use_namespace = 1
-yaf.cache_config = 1
-yaf.use_spl_autoload = 0
-' > /etc/php.d/yaf.ini
-
-echo 'Listen 85
-<VirtualHost *:85>
-	ServerName localhost
-	DocumentRoot "/var/www/html/shop/public"
-
-	ErrorLog logs/test_error_log
-	LogLevel warn
-	CustomLog logs/test_access_log combined
-</VirtualHost>
-
-<Directory "/var/www/html/shop/public">
-    AllowOverride ALL
-    Options Indexes FollowSymLinks
-    Order allow,deny
-    Allow from all
-</Directory>' >> /etc/httpd/conf/httpd.conf
-
-service httpd restart
-# 在浏览器访问http://webserver:85/，就可以看到网站部署成功
-```
-
-
-参考
-===
-- [yaf的一些资源](http://www.laruence.com/2012/07/06/2649.html)
-- [yaf学习的一些思路](http://achun.iteye.com/blog/1473126)
-- [YafUse项目](https://www.github.com/melonwool/YafUse/)
-- [yaf的api](http://yaf.laruence.com/manual/index.html)
-- [浅谈数据库设计技巧](http://www.knowsky.com/4937.html)
-- [SAE(sina app engine)](http://sae.sina.com.cn)
-
-最终效果：
-![home](https://github.com/yantze/yaf/raw/master/docs/homepage-Screenshot.png)
-![backpabe](https://github.com/yantze/yaf/raw/master/docs/backpage-Screenshot.png)
