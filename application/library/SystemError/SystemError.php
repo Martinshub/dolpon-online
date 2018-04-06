@@ -13,7 +13,7 @@ class SystemError extends AbstractSystemError
      */
     public function getFileContentDesc()
     {
-        $fileArr = $this->getFileName();
+        $fileArr = $this->getFileName(self::SYS_ERROR_PATH.date('Y-m').'/');
         $list = [];
         if(empty($fileArr) === false ){
             foreach($fileArr as $k=>$v) {
@@ -32,23 +32,18 @@ class SystemError extends AbstractSystemError
     /**
      * 计算出最新的文件名
      */
-    protected function getFileName()
+    protected function getFileName($dir, $fileArr=[])
     {
-        $handle = opendir(self::SYS_ERROR_PATH.date('Y-m').'/');
-        $fileArr = [];
+        $handle = opendir($dir);
         while(false !== ($file = readdir($handle))) {
             if($file !== '.' && $file !== '..') {
-                if( is_dir(self::SYS_ERROR_PATH.date('Y-m').'/'.$file) ) {
-                    $handle = opendir(self::SYS_ERROR_PATH.date('Y-m').'/'.$file);
-                    while(false !== ($file1 = readdir($handle))) {
-                        if ($file1 !== '.' && $file1 !== '..') {
-                            $fileName = self::SYS_ERROR_PATH.date('Y-m').'/'.$file.'/'.$file1;
-                            if(is_file($fileName)) {
-                                $fileArr[$fileName] = filectime($fileName);
-                            }
-                        }
-
-                    }
+                $secondDir = self::SYS_ERROR_PATH.date('Y-m').'/'.$file;
+                if( is_dir() ) {
+                    $secondArr = $this->getFileName($secondDir ,$fileArr);
+                    $fileArr = array_merge($secondArr, $fileArr);
+                }
+                if(is_file($fileName)) {
+                    $fileArr[$fileName] = filectime($fileName);
                 }
 
             }
