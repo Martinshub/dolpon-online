@@ -1,5 +1,7 @@
 <?php
 
+namespace SystemError;
+
 require_once('package/AbstractSystemError.php');
 
 class SystemError extends AbstractSystemError
@@ -13,7 +15,7 @@ class SystemError extends AbstractSystemError
      */
     public function getFileContentDesc()
     {
-        $fileArr = $this->getFileName(self::SYS_ERROR_PATH.date('Y-m').'/');
+        $fileArr = $this->getFileName(self::SYS_ERROR_PATH.date('Y-m'), []);
         $list = [];
         if(empty($fileArr) === false ){
             foreach($fileArr as $k=>$v) {
@@ -37,18 +39,19 @@ class SystemError extends AbstractSystemError
         $handle = opendir($dir);
         while(false !== ($file = readdir($handle))) {
             if($file !== '.' && $file !== '..') {
-                $secondDir = self::SYS_ERROR_PATH.date('Y-m').'/'.$file;
-                if( is_dir() ) {
-                    $secondArr = $this->getFileName($secondDir ,$fileArr);
+                $fileName = $dir.'/'.$file;
+                if( is_dir($fileName) ) {
+                    $secondArr = $this->getFileName($fileName ,$fileArr);
                     $fileArr = array_merge($secondArr, $fileArr);
                 }
                 if(is_file($fileName)) {
                     $fileArr[$fileName] = filectime($fileName);
                 }
-
             }
         }
-        asort($fileArr);
+        if(!empty($fileArr)) {
+            asort($fileArr);
+        }
 
         return $fileArr;
     }

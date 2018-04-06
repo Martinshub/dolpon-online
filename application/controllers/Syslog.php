@@ -1,6 +1,6 @@
 <?php
 
-require_once('../application/library/SystemError/SystemError.php');
+use SystemError\SystemError;
 
 Class SysLogController extends Yaf_Controller_Abstract
 {
