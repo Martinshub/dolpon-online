@@ -1,9 +1,6 @@
 {
     "require":{
-        "monolog/monolog": "1.2.*",
-        "raulfraile/ladybug": "~1.0",
-        "yaf/extras": "*",
-        "suin/php-yaf-twig": ">=1.0"
+        "elasticsearch/elasticsearch": "~6.0"
     },
     "config":{
     
